@@ -1,19 +1,19 @@
 {
   "weather": {
     "location": "Alajuela",
-    "condition": "Cielo Despejado",
-    "temp_c": "26",
+    "condition": "Lluvia ligera",
+    "temp_c": "25",
     "max_temp_c": "30",
     "min_temp_c": "20",
-    "wind_kmh": "13",
-    "humidity": "45",
+    "wind_kmh": "11",
+    "humidity": "80",
     "uv_index": "9 (Muy Alto)",
-    "prob_rain": "0"
+    "prob_rain": "80"
   },
   "instagram": {
     "username": "@chatgptricks",
     "followers": "2.45M",
-    "growth": "+428",
+    "growth": "+1,139",
     "last_post_placeholder": "Último Post"
   },
   "maxx_status": {
@@ -27,6 +27,6 @@
   "news": {
     "tag": "Breaking News",
     "headline": "OpenClaw founder Peter Steinberger is joining OpenAI",
-    "image_url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800"
+    "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800"
   }
 }
