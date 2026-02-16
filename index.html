@@ -209,28 +209,28 @@
         <!-- Weather -->
         <div class="box weather">
             <div class="weather-top">
-                <div><div class="location" id="w-loc">...</div><div class="condition-text" id="w-cond">...</div></div>
-                <div style="font-size: 80px;" id="w-icon">🌦️</div>
+                <div><div class="location" id="w-loc">Alajuela</div><div class="condition-text" id="w-cond">Soleado</div></div>
+                <div style="font-size: 80px;" id="w-icon">☀️</div>
             </div>
             <div class="temp-row">
-                <div class="temp-main" id="w-temp">...</div>
-                <div class="temp-minmax" id="w-minmax">...</div>
+                <div class="temp-main" id="w-temp">25°</div>
+                <div class="temp-minmax" id="w-minmax">Máx: 30° Mín: 20°</div>
             </div>
             <div class="weather-details-grid">
-                <div class="detail-item"><span class="detail-label">Viento</span><span class="detail-value" id="w-wind">...</span></div>
-                <div class="detail-item"><span class="detail-label">Humedad</span><span class="detail-value" id="w-hum">...</span></div>
-                <div class="detail-item"><span class="detail-label">Índice UV</span><span class="detail-value" id="w-uv">...</span></div>
-                <div class="detail-item"><span class="detail-label">Prob. Lluvia</span><span class="detail-value" id="w-prob">...</span></div>
+                <div class="detail-item"><span class="detail-label">Viento</span><span class="detail-value" id="w-wind">11 km/h</span></div>
+                <div class="detail-item"><span class="detail-label">Humedad</span><span class="detail-value" id="w-hum">80%</span></div>
+                <div class="detail-item"><span class="detail-label">Índice UV</span><span class="detail-value" id="w-uv">9 (Muy Alto)</span></div>
+                <div class="detail-item"><span class="detail-label">Prob. Lluvia</span><span class="detail-value" id="w-prob">80%</span></div>
             </div>
         </div>
 
         <!-- Instagram -->
         <div class="box instagram">
-            <div style="display: flex; align-items: center;"><span style="font-size: 24px;">📸</span><span class="ig-username" id="ig-user">...</span></div>
+            <div style="display: flex; align-items: center;"><span style="font-size: 24px;">📸</span><span class="ig-username" id="ig-user">@chatgptricks</span></div>
             <div class="ig-stats-container">
-                <div><div style="font-size: 12px; opacity: 0.8; text-transform: uppercase;">Seguidores</div><div class="ig-stat-value" id="ig-foll">...</div></div>
+                <div><div style="font-size: 12px; opacity: 0.8; text-transform: uppercase;">Seguidores</div><div class="ig-stat-value" id="ig-foll">2.45M</div></div>
                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                    <div class="ig-growth" id="ig-grow">...</div>
+                    <div class="ig-growth" id="ig-grow">↑ +1,139</div>
                     <div class="ig-last-post" id="ig-post"></div>
                 </div>
             </div>
@@ -239,14 +239,14 @@
         <!-- Unified Maxx Status -->
         <div class="box maxx-status-box">
             <div class="status-left">
-                <div class="status-date" id="m-date">...</div>
+                <div class="status-date" id="m-date">Lunes, 16 Feb</div>
                 <div class="health-info">
                     <div class="health-item">
-                        <span>🧠 Contexto (<span id="m-ctx-p">...</span>%)</span>
-                        <div class="health-bar-bg"><div class="health-bar-fill" id="m-ctx-bar" style="width: 0%;"></div></div>
+                        <span>🧠 Contexto (<span id="m-ctx-p">37</span>%)</span>
+                        <div class="health-bar-bg"><div class="health-bar-fill" id="m-ctx-bar" style="width: 37%;"></div></div>
                     </div>
                     <div class="health-item">
-                        <span id="m-tokens">🧮 Tokens: ...</span>
+                        <span id="m-tokens">🧮 Tokens: 43k</span>
                     </div>
                 </div>
                 <div class="comm-status">
@@ -257,22 +257,24 @@
             <div class="avatar-container">
                 <img src="maxx_avatar_real.png" class="maxx-avatar">
             </div>
-            <div class="maxx-label" id="m-label">...</div>
+            <div class="maxx-label" id="m-label">Maxx Moltbot</div>
         </div>
 
         <!-- Unified News Card -->
-        <div class="box news-box" id="n-bg">
+        <div class="box news-box" id="n-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800');">
             <div class="news-overlay">
-                <span class="news-tag" id="n-tag">...</span>
-                <div class="news-headline" id="n-head">...</div>
+                <span class="news-tag" id="n-tag">Breaking News</span>
+                <div class="news-headline" id="n-head">OpenClaw founder Peter Steinberger is joining OpenAI</div>
             </div>
         </div>
     </div>
 
+    <!-- The dynamic logic is now a fallback/update mechanism, but HTML has initial state for reliable screenshotting -->
     <script>
         async function updateDashboard() {
             try {
                 const response = await fetch('data.json');
+                if (!response.ok) return;
                 const data = await response.json();
                 
                 // Weather
@@ -285,10 +287,11 @@
                 document.getElementById('w-uv').textContent = data.weather.uv_index;
                 document.getElementById('w-prob').textContent = data.weather.prob_rain + '%';
 
-                // Weather Icon Logic
+                // Icon Logic
                 const icon = document.getElementById('w-icon');
-                if (data.weather.condition.toLowerCase().includes('lluvia')) icon.textContent = '🌧️';
-                else if (data.weather.condition.toLowerCase().includes('nube')) icon.textContent = '☁️';
+                const cond = data.weather.condition.toLowerCase();
+                if (cond.includes('lluvia')) icon.textContent = '🌧️';
+                else if (cond.includes('nube') || cond.includes('nublado')) icon.textContent = '☁️';
                 else icon.textContent = '☀️';
 
                 // Instagram
@@ -310,7 +313,7 @@
                     document.getElementById('n-bg').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${data.news.image_url}')`;
                 }
 
-            } catch (e) { console.error("Error updating dashboard:", e); }
+            } catch (e) { console.warn("Fetch failed, using static data", e); }
         }
         updateDashboard();
     </script>
