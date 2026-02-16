@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxx Dashboard - Dynamic Final</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body, html {
+            width: 1024px;
+            height: 640px;
+            background: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 512px 512px;
+            grid-template-rows: 320px 320px;
+            width: 1024px;
+            height: 640px;
+        }
+        .box {
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Weather Section */
+        .weather {
+            grid-column: 1; grid-row: 1;
+            background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
+            padding: 20px; gap: 10px;
+        }
+        .weather-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .location { font-size: 26px; font-weight: 600; }
+        .temp-row { display: flex; align-items: baseline; gap: 15px; margin-top: -5px; }
+        .temp-main { font-size: 80px; font-weight: 200; line-height: 1; }
+        .weather-details-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px;
+            background: rgba(255, 255, 255, 0.2); padding: 12px; border-radius: 12px; backdrop-filter: blur(5px);
+        }
+        .detail-item { display: flex; flex-direction: column; }
+        .detail-label { font-size: 10px; text-transform: uppercase; opacity: 0.7; }
+        .detail-value { font-size: 16px; font-weight: 600; }
+
+        /* Instagram Section */
+        .instagram {
+            grid-column: 1; grid-row: 2;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            padding: 25px; justify-content: space-between;
+        }
+        .ig-username { font-size: 22px; font-weight: 700; margin-left: 10px; }
+        .ig-stats-container { display: flex; justify-content: space-between; align-items: flex-end; }
+        .ig-stat-value { font-size: 64px; font-weight: 800; line-height: 1; }
+        .ig-growth {
+            background: rgba(0, 255, 0, 0.2); color: #afff94; padding: 5px 12px;
+            border-radius: 20px; font-weight: bold; font-size: 18px; margin-bottom: 5px;
+        }
+        .ig-last-post {
+            width: 100px; height: 100px; border-radius: 10px;
+            background-image: url('https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw');
+            background-size: cover; border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        /* Unified Maxx Status Section */
+        .maxx-status-box {
+            grid-column: 2; grid-row: 1;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 25px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+        }
+        .status-left {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
+            justify-content: space-between;
+            padding-bottom: 5px;
+            z-index: 2;
+        }
+        .status-date {
+            font-size: 24px;
+            color: #ff9f0a;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .health-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .health-item {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .health-bar-bg {
+            width: 120px;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+        .health-bar-fill {
+            height: 100%;
+            background: #4cd137;
+        }
+        .comm-status {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        .comm-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .check-circle {
+            width: 16px;
+            height: 16px;
+            background: #4cd137;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #000;
+        }
+        .avatar-container {
+            position: absolute;
+            right: -20px;
+            bottom: -10px;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .maxx-avatar {
+            width: 320px;
+            height: auto;
+            image-rendering: -webkit-optimize-contrast;
+        }
+        .maxx-label {
+            position: absolute;
+            bottom: 10px;
+            left: 25px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.4;
+            z-index: 3;
+        }
+
+        /* Unified News Card */
+        .news-box {
+            grid-column: 2; grid-row: 2;
+            background-size: cover;
+            background-position: center;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .news-overlay {
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 35px 20px;
+        }
+        .news-tag {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .news-headline {
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.1;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0,0,0,1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Weather -->
+        <div class="box weather">
+            <div class="weather-top">
+                <div><div class="location" id="w-loc">...</div><div class="condition-text" id="w-cond">...</div></div>
+                <div style="font-size: 80px;">🌦️</div>
+            </div>
+            <div class="temp-row">
+                <div class="temp-main" id="w-temp">...</div>
+                <div style="font-size: 18px; opacity: 0.8;" id="w-minmax">...</div>
+            </div>
+            <div class="weather-details-grid">
+                <div class="detail-item"><span class="detail-label">Viento</span><span class="detail-value" id="w-wind">...</span></div>
+                <div class="detail-item"><span class="detail-label">Humedad</span><span class="detail-value" id="w-hum">...</span></div>
+                <div class="detail-item"><span class="detail-label">Índice UV</span><span class="detail-value" id="w-uv">...</span></div>
+                <div class="detail-item"><span class="detail-label">Prob. Lluvia</span><span class="detail-value" id="w-prob">...</span></div>
+            </div>
+        </div>
+
+        <!-- Instagram -->
+        <div class="box instagram">
+            <div style="display: flex; align-items: center;"><span style="font-size: 24px;">📸</span><span class="ig-username" id="ig-user">...</span></div>
+            <div class="ig-stats-container">
+                <div><div style="font-size: 12px; opacity: 0.8; text-transform: uppercase;">Seguidores</div><div class="ig-stat-value" id="ig-foll">...</div></div>
+                <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                    <div class="ig-growth" id="ig-grow">...</div>
+                    <div class="ig-last-post" id="ig-post"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified Maxx Status -->
+        <div class="box maxx-status-box">
+            <div class="status-left">
+                <div class="status-date" id="m-date">...</div>
+                <div class="health-info">
+                    <div class="health-item">
+                        <span>🧠 Contexto (<span id="m-ctx-p">...</span>%)</span>
+                        <div class="health-bar-bg"><div class="health-bar-fill" id="m-ctx-bar" style="width: 0%;"></div></div>
+                    </div>
+                    <div class="health-item">
+                        <span id="m-tokens">🧮 Tokens: ...</span>
+                    </div>
+                </div>
+                <div class="comm-status">
+                    <div class="comm-item"><div class="check-circle">✓</div><span>Telegram</span></div>
+                    <div class="comm-item"><div class="check-circle">✓</div><span>WhatsApp</span></div>
+                </div>
+            </div>
+            <div class="avatar-container">
+                <img src="file:///Users/maxx/.openclaw/workspace/maxx_avatar_real.png" class="maxx-avatar">
+            </div>
+            <div class="maxx-label" id="m-label">...</div>
+        </div>
+
+        <!-- Unified News Card -->
+        <div class="box news-box" id="n-bg">
+            <div class="news-overlay">
+                <span class="news-tag" id="n-tag">...</span>
+                <div class="news-headline" id="n-head">...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Injection Block -->
+    <script id="dashboard-data" type="application/json">
+    {
+      "weather": {
+        "location": "Alajuela",
+        "condition": "Soleado",
+        "temp_c": "35",
+        "max_temp_c": "35",
+        "min_temp_c": "23",
+        "wind_kmh": "26",
+        "humidity": "32",
+        "uv_index": "3",
+        "prob_rain": "0"
+      },
+      "instagram": {
+        "username": "@chatgptricks",
+        "followers": "2.45M",
+        "growth": "+428",
+        "last_post_placeholder": "Último Post"
+      },
+      "maxx_status": {
+        "date": "Lunes, 16 Feb",
+        "context_percent": 37,
+        "tokens_in": "43k",
+        "telegram_status": "✓",
+        "whatsapp_status": "✓",
+        "label": "Maxx Moltbot"
+      },
+      "news": {
+        "tag": "Breaking News",
+        "headline": "OpenClaw founder Peter Steinberger is joining OpenAI",
+        "image_url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800"
+      }
+    }
+    </script>
+
+    <script>
+        function updateDashboard() {
+            const dataText = document.getElementById('dashboard-data').textContent;
+            const data = JSON.parse(dataText);
+            
+            // Weather
+            document.getElementById('w-loc').textContent = data.weather.location;
+            document.getElementById('w-cond').textContent = data.weather.condition;
+            document.getElementById('w-temp').textContent = data.weather.temp_c + '°';
+            document.getElementById('w-minmax').textContent = `Máx: ${data.weather.max_temp_c}° Mín: ${data.weather.min_temp_c}°`;
+            document.getElementById('w-wind').textContent = `↙ ${data.weather.wind_kmh} km/h`;
+            document.getElementById('w-hum').textContent = data.weather.humidity + '%';
+            document.getElementById('w-uv').textContent = data.weather.uv_index;
+            document.getElementById('w-prob').textContent = data.weather.prob_rain + '%';
+
+            // Instagram
+            document.getElementById('ig-user').textContent = data.instagram.username;
+            document.getElementById('ig-foll').textContent = data.instagram.followers;
+            document.getElementById('ig-grow').textContent = `↑ ${data.instagram.growth}`;
+
+            // Maxx Status
+            document.getElementById('m-date').textContent = data.maxx_status.date;
+            document.getElementById('m-ctx-p').textContent = data.maxx_status.context_percent;
+            document.getElementById('m-ctx-bar').style.width = data.maxx_status.context_percent + '%';
+            document.getElementById('m-tokens').textContent = `🧮 Tokens: ${data.maxx_status.tokens_in}`;
+            document.getElementById('m-label').textContent = data.maxx_status.label;
+
+            // News
+            document.getElementById('n-tag').textContent = data.news.tag;
+            document.getElementById('n-head').textContent = data.news.headline;
+            if (data.news.image_url) {
+                document.getElementById('n-bg').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${data.news.image_url}')`;
+            }
+        }
+        updateDashboard();
+    </script>
+</body>
+</html>
