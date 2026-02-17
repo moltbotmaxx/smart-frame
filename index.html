@@ -4,316 +4,325 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maxx Dashboard - Smart Frame</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body, html {
-            width: 1024px;
-            height: 640px;
-            background: #000;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
+            width: 1024px; height: 640px; background: #0a0e14; color: #e6edf3;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden; -webkit-font-smoothing: antialiased;
         }
         .container {
-            display: grid;
-            grid-template-columns: 512px 512px;
-            grid-template-rows: 320px 320px;
-            width: 1024px;
-            height: 640px;
+            display: grid; grid-template-columns: 58fr 42fr; grid-template-rows: 56fr 44fr;
+            width: 1024px; height: 640px; gap: 5px; padding: 5px;
         }
-        .box {
-            border: 1px solid rgba(255,255,255,0.05);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+        .weather-card {
+            grid-column: 1; grid-row: 1; border-radius: 18px; overflow: hidden;
+            position: relative; display: flex; flex-direction: column; justify-content: space-between;
         }
-
-        /* Weather Section */
-        .weather {
-            grid-column: 1; grid-row: 1;
-            background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
-            padding: 20px; gap: 10px;
+        .weather-bg {
+            position: absolute; inset: 0; background-size: cover; background-position: center;
+            transition: opacity 0.8s ease; z-index: 0;
         }
-        .weather-top { display: flex; justify-content: space-between; align-items: flex-start; }
-        .location { font-size: 26px; font-weight: 600; }
-        .condition-text { font-size: 16px; opacity: 0.9; }
-        .temp-row { display: flex; align-items: baseline; gap: 15px; margin-top: -5px; }
-        .temp-main { font-size: 80px; font-weight: 200; line-height: 1; }
-        .temp-minmax { font-size: 18px; opacity: 0.8; }
-        .weather-details-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px;
-            background: rgba(255, 255, 255, 0.2); padding: 12px; border-radius: 12px; backdrop-filter: blur(5px);
+        .weather-bg-overlay { position: absolute; inset: 0; z-index: 1; }
+        .weather-card[data-theme="day"] .weather-bg-overlay {
+            background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.35) 100%);
         }
-        .detail-item { display: flex; flex-direction: column; }
-        .detail-label { font-size: 10px; text-transform: uppercase; opacity: 0.7; }
-        .detail-value { font-size: 16px; font-weight: 600; }
-
-        /* Instagram Section */
-        .instagram {
-            grid-column: 1; grid-row: 2;
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            padding: 25px; justify-content: space-between;
+        .weather-card[data-theme="night"] .weather-bg-overlay {
+            background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.5) 100%);
         }
-        .ig-username { font-size: 22px; font-weight: 700; margin-left: 10px; }
-        .ig-stats-container { display: flex; justify-content: space-between; align-items: flex-end; }
-        .ig-stat-value { font-size: 64px; font-weight: 800; line-height: 1; }
+        .weather-card[data-theme="rain"] .weather-bg-overlay {
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.45) 100%);
+        }
+        .weather-card[data-theme="cloudy"] .weather-bg-overlay {
+            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.4) 100%);
+        }
+        .weather-content {
+            position: relative; z-index: 2; padding: 24px 28px 18px;
+            display: flex; flex-direction: column; justify-content: space-between; height: 100%;
+        }
+        .weather-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .weather-location { font-size: 22px; font-weight: 700; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,0.4); }
+        .weather-condition { font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 500; margin-top: 2px; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+        .weather-icon-main { font-size: 52px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); }
+        .weather-hero { display: flex; align-items: flex-end; gap: 14px; }
+        .weather-temp { font-size: 88px; font-weight: 200; line-height: 1; color: #fff; letter-spacing: -4px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+        .weather-temp-unit { font-size: 32px; font-weight: 300; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+        .weather-sub { margin-bottom: 14px; display: flex; flex-direction: column; gap: 2px; }
+        .weather-feels { font-size: 13px; color: rgba(255,255,255,0.7); text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+        .weather-minmax { font-size: 13px; color: rgba(255,255,255,0.55); text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+        .weather-bottom-row { display: flex; gap: 6px; }
+        .weather-detail-chip {
+            flex: 1; background: rgba(255,255,255,0.12); backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px; padding: 10px 10px; text-align: center;
+        }
+        .chip-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.6); font-weight: 600; }
+        .chip-value { font-size: 15px; font-weight: 700; color: #fff; margin-top: 3px; }
+        .weather-hourly-strip { display: flex; gap: 4px; margin-top: 6px; }
+        .hourly-chip {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 6px 10px;
+            display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 56px;
+        }
+        .hourly-chip-time { font-size: 9px; color: rgba(255,255,255,0.55); font-weight: 600; }
+        .hourly-chip-icon { font-size: 16px; }
+        .hourly-chip-temp { font-size: 13px; font-weight: 700; color: #fff; }
+        .moltbot-card {
+            grid-column: 2; grid-row: 1; border-radius: 18px; overflow: hidden; position: relative;
+            background: linear-gradient(155deg, #111827 0%, #0f172a 60%, #1a1033 100%);
+            border: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; padding: 22px 24px 18px;
+        }
+        .moltbot-card::before {
+            content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(255,159,10,0.12) 0%, transparent 70%); pointer-events: none;
+        }
+        .moltbot-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; z-index: 2; }
+        .moltbot-title { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.4); font-weight: 600; }
+        .moltbot-date { font-size: 12px; color: #ff9f0a; font-weight: 600; }
+        .moltbot-showcase { display: flex; align-items: center; gap: 18px; flex: 1; z-index: 2; }
+        .avatar-ring { position: relative; width: 130px; height: 130px; flex-shrink: 0; }
+        .avatar-ring::before {
+            content: ''; position: absolute; inset: -3px; border-radius: 50%;
+            background: conic-gradient(from 0deg, #ff9f0a, #f97316, #ef4444, #ec4899, #8b5cf6, #3b82f6, #06b6d4, #10b981, #ff9f0a);
+            animation: ring-rotate 8s linear infinite;
+        }
+        @keyframes ring-rotate { to { transform: rotate(360deg); } }
+        .avatar-ring::after { content: ''; position: absolute; inset: 2px; border-radius: 50%; background: #111827; }
+        .avatar-img-wrap {
+            position: absolute; inset: 4px; border-radius: 50%; overflow: hidden; z-index: 1;
+            background: linear-gradient(135deg, #1a2332 0%, #111827 100%);
+        }
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+        .moltbot-info { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .moltbot-name { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.1; }
+        .moltbot-name-sub { font-size: 11px; color: rgba(255,255,255,0.35); font-weight: 500; }
+        .moltbot-mood { font-size: 11px; color: rgba(255,255,255,0.5); }
+        .moltbot-mood-emoji { font-size: 16px; }
+        .moltbot-metrics { display: flex; flex-direction: column; gap: 8px; z-index: 2; margin-top: auto; }
+        .metric-row { display: flex; flex-direction: column; gap: 4px; }
+        .metric-header { display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 500; }
+        .metric-bar-track { width: 100%; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+        .metric-bar-value { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #4cd137, #2ecc71); transition: width 0.6s ease; }
+        .metric-tokens { font-size: 11px; color: rgba(255,255,255,0.4); }
+        .moltbot-comms { display: flex; gap: 8px; margin-top: 8px; z-index: 2; }
+        .comm-pill {
+            display: flex; align-items: center; gap: 5px; background: rgba(76,209,55,0.08);
+            border: 1px solid rgba(76,209,55,0.15); padding: 4px 10px; border-radius: 8px;
+            font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.6);
+        }
+        .comm-dot { width: 5px; height: 5px; background: #4cd137; border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(76,209,55,0.5); }
+            50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(76,209,55,0); }
+        }
+        .instagram-card {
+            grid-column: 1; grid-row: 2; border-radius: 18px; overflow: hidden; position: relative;
+            background: linear-gradient(145deg, #111827 0%, #18122b 100%);
+            border: 1px solid rgba(255,255,255,0.06); padding: 20px 22px;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .instagram-card::before {
+            content: ''; position: absolute; bottom: -40px; left: -40px; width: 160px; height: 160px;
+            background: radial-gradient(circle, rgba(225,48,108,0.12) 0%, transparent 70%); pointer-events: none;
+        }
+        .ig-header { display: flex; align-items: center; gap: 10px; }
+        .ig-logo {
+            width: 30px; height: 30px; border-radius: 8px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .ig-logo-inner { width: 16px; height: 16px; border: 2px solid #fff; border-radius: 4px; position: relative; }
+        .ig-logo-inner::before {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 6px; height: 6px; border: 1.5px solid #fff; border-radius: 50%;
+        }
+        .ig-logo-inner::after { content: ''; position: absolute; top: 1px; right: 1px; width: 3px; height: 3px; background: #fff; border-radius: 50%; }
+        .ig-username { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.85); }
+        .ig-main-stat { display: flex; align-items: baseline; gap: 14px; }
+        .ig-followers-count { font-size: 48px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -2px; }
+        .ig-followers-label { font-size: 13px; color: rgba(255,255,255,0.35); }
         .ig-growth {
-            background: rgba(0, 255, 0, 0.2); color: #afff94; padding: 5px 12px;
-            border-radius: 20px; font-weight: bold; font-size: 18px; margin-bottom: 5px;
+            background: rgba(76,209,55,0.1); border: 1px solid rgba(76,209,55,0.18);
+            color: #6ee75a; padding: 3px 10px; border-radius: 20px; font-weight: 700; font-size: 12px;
         }
-        .ig-last-post {
-            width: 100px; height: 100px; border-radius: 10px;
-            background-image: url('https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw');
-            background-size: cover; border: 2px solid rgba(255,255,255,0.3);
+        .ig-pills { display: flex; gap: 8px; }
+        .ig-pill {
+            flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px; padding: 8px; text-align: center;
         }
-
-        /* Unified Maxx Status Section */
-        .maxx-status-box {
-            grid-column: 2; grid-row: 1;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            padding: 25px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: flex-end;
-            position: relative;
+        .ig-pill-val { font-size: 16px; font-weight: 700; color: #fff; }
+        .ig-pill-label { font-size: 9px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+        .news-card {
+            grid-column: 2; grid-row: 2; border-radius: 18px; overflow: hidden; position: relative;
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: flex-end;
         }
-        .status-left {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            height: 100%;
-            justify-content: space-between;
-            padding-bottom: 5px;
-            z-index: 2;
-        }
-        .status-date {
-            font-size: 24px;
-            color: #ff9f0a;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .health-info {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .health-item {
-            font-size: 14px;
-            color: rgba(255,255,255,0.9);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .health-bar-bg {
-            width: 120px;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-top: 4px;
-        }
-        .health-bar-fill {
-            height: 100%;
-            background: #4cd137;
-        }
-        .comm-status {
-            display: flex;
-            gap: 15px;
-            margin-top: 5px;
-        }
-        .comm-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .check-circle {
-            width: 16px;
-            height: 16px;
-            background: #4cd137;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #000;
-        }
-        .avatar-container {
-            position: absolute;
-            right: -20px;
-            bottom: -10px;
-            width: 320px;
-            height: 320px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-end;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .maxx-avatar {
-            width: 320px;
-            height: auto;
-            image-rendering: -webkit-optimize-contrast;
-        }
-        .maxx-label {
-            position: absolute;
-            bottom: 10px;
-            left: 25px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.4;
-            z-index: 3;
-        }
-
-        /* Unified News Card */
-        .news-box {
-            grid-column: 2; grid-row: 2;
-            background-size: cover;
-            background-position: center;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-        .news-overlay {
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            padding: 35px 20px;
+        .news-gradient {
+            padding: 60px 22px 20px;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.95) 100%);
+            border-radius: 0 0 16px 16px;
         }
         .news-tag {
-            background: #e74c3c;
-            color: white;
-            padding: 4px 10px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 15px;
+            display: inline-block; background: #ef4444; color: white; padding: 3px 10px;
+            font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            border-radius: 4px; margin-bottom: 8px;
         }
-        .news-headline {
-            font-size: 26px;
-            font-weight: 800;
-            line-height: 1.1;
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0,0,0,1);
-        }
+        .news-headline { font-size: 18px; font-weight: 700; line-height: 1.25; color: #fff; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Weather -->
-        <div class="box weather">
-            <div class="weather-top">
-                <div><div class="location" id="w-loc">Alajuela</div><div class="condition-text" id="w-cond">Soleado</div></div>
-                <div style="font-size: 80px;" id="w-icon">☀️</div>
-            </div>
-            <div class="temp-row">
-                <div class="temp-main" id="w-temp">22°</div>
-                <div class="temp-minmax" id="w-minmax">Máx: 30° Mín: 20°</div>
-            </div>
-            <div class="weather-details-grid">
-                <div class="detail-item"><span class="detail-label">Viento</span><span class="detail-value" id="w-wind">11 km/h</span></div>
-                <div class="detail-item"><span class="detail-label">Humedad</span><span class="detail-value" id="w-hum">80%</span></div>
-                <div class="detail-item"><span class="detail-label">Índice UV</span><span class="detail-value" id="w-uv">9 (Muy Alto)</span></div>
-                <div class="detail-item"><span class="detail-label">Prob. Lluvia</span><span class="detail-value" id="w-prob">80%</span></div>
-            </div>
-        </div>
-
-        <!-- Instagram -->
-        <div class="box instagram">
-            <div style="display: flex; align-items: center;"><span style="font-size: 24px;">📸</span><span class="ig-username" id="ig-user">@chatgptricks</span></div>
-            <div class="ig-stats-container">
-                <div><div style="font-size: 12px; opacity: 0.8; text-transform: uppercase;">Seguidores</div><div class="ig-stat-value" id="ig-foll">2.45M</div></div>
-                <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                    <div class="ig-growth" id="ig-grow">↑ +1,139</div>
-                    <div class="ig-last-post" id="ig-post"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Unified Maxx Status -->
-        <div class="box maxx-status-box">
-            <div class="status-left">
-                <div class="status-date" id="m-date">Lunes, 16 Feb</div>
-                <div id="m-update" style="font-size: 10px; opacity: 0.5; margin-top: -10px; margin-bottom: 5px;">Last update: 20:00</div>
-                <div class="health-info">
-                    <div class="health-item">
-                        <span>🧠 Contexto (<span id="m-ctx-p">37</span>%)</span>
-                        <div class="health-bar-bg"><div class="health-bar-fill" id="m-ctx-bar" style="width: 37%;"></div></div>
+        <div class="weather-card" id="weather-card" data-theme="day">
+            <div class="weather-bg" id="weather-bg" style="background-image: url('images/weather_sunny.png');"></div>
+            <div class="weather-bg-overlay"></div>
+            <div class="weather-content">
+                <div class="weather-header">
+                    <div>
+                        <div class="weather-location" id="w-loc">Alajuela</div>
+                        <div class="weather-condition" id="w-cond">Cielo Despejado</div>
                     </div>
-                    <div class="health-item">
-                        <span id="m-tokens">🧮 Tokens: 43k</span>
+                    <div class="weather-icon-main" id="w-icon">☀️</div>
+                </div>
+                <div class="weather-hero">
+                    <div class="weather-temp" id="w-temp">24</div>
+                    <div class="weather-temp-unit">°</div>
+                    <div class="weather-sub">
+                        <div class="weather-feels">Se siente <span id="w-feels">26</span>°</div>
+                        <div class="weather-minmax" id="w-minmax">↑ 30°  ↓ 20°</div>
                     </div>
                 </div>
-                <div class="comm-status">
-                    <div class="comm-item"><div class="check-circle">✓</div><span>Telegram</span></div>
-                    <div class="comm-item"><div class="check-circle">✓</div><span>WhatsApp</span></div>
+                <div>
+                    <div class="weather-bottom-row">
+                        <div class="weather-detail-chip"><div class="chip-label">Viento</div><div class="chip-value" id="w-wind">6 km/h</div></div>
+                        <div class="weather-detail-chip"><div class="chip-label">Humedad</div><div class="chip-value" id="w-hum">80%</div></div>
+                        <div class="weather-detail-chip"><div class="chip-label">UV</div><div class="chip-value" id="w-uv">9</div></div>
+                        <div class="weather-detail-chip"><div class="chip-label">Lluvia</div><div class="chip-value" id="w-prob">80%</div></div>
+                    </div>
+                    <div class="weather-hourly-strip" id="w-hourly">
+                        <div class="hourly-chip"><span class="hourly-chip-time">3PM</span><span class="hourly-chip-icon">☁️</span><span class="hourly-chip-temp">28°</span></div>
+                        <div class="hourly-chip"><span class="hourly-chip-time">6PM</span><span class="hourly-chip-icon">🌧️</span><span class="hourly-chip-temp">25°</span></div>
+                        <div class="hourly-chip"><span class="hourly-chip-time">9PM</span><span class="hourly-chip-icon">🌙</span><span class="hourly-chip-temp">22°</span></div>
+                    </div>
                 </div>
             </div>
-            <div class="avatar-container">
-                <img src="maxx_avatar_real.png" class="maxx-avatar">
-            </div>
-            <div class="maxx-label" id="m-label">Maxx Moltbot</div>
         </div>
-
-        <!-- Unified News Card -->
-        <div class="box news-box" id="n-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800');">
-            <div class="news-overlay">
+        <div class="moltbot-card">
+            <div class="moltbot-header">
+                <div class="moltbot-title">OpenClaw Agent</div>
+                <div class="moltbot-date" id="m-date">Lunes, 16 Feb</div>
+            </div>
+            <div class="moltbot-showcase">
+                <div class="avatar-ring">
+                    <div class="avatar-img-wrap"><img src="maxx_avatar_real.png" class="avatar-img" alt="Moltbot"></div>
+                </div>
+                <div class="moltbot-info">
+                    <div><div class="moltbot-name" id="m-label">Maxx Moltbot</div><div class="moltbot-name-sub">AI Assistant · Active</div></div>
+                    <div class="moltbot-mood" id="m-mood-wrap"><span class="moltbot-mood-emoji" id="m-mood">🚀</span> <span id="m-update">Last update: 17:34</span></div>
+                </div>
+            </div>
+            <div class="moltbot-metrics">
+                <div class="metric-row">
+                    <div class="metric-header"><span>🧠 Contexto</span><span id="m-ctx-p">37%</span></div>
+                    <div class="metric-bar-track"><div class="metric-bar-value" id="m-ctx-bar" style="width: 37%;"></div></div>
+                </div>
+                <div class="metric-tokens" id="m-tokens">🧮 Tokens: 43k</div>
+            </div>
+            <div class="moltbot-comms">
+                <div class="comm-pill"><div class="comm-dot"></div> Telegram</div>
+                <div class="comm-pill"><div class="comm-dot"></div> WhatsApp</div>
+            </div>
+        </div>
+        <div class="instagram-card">
+            <div class="ig-header">
+                <div class="ig-logo"><div class="ig-logo-inner"></div></div>
+                <div class="ig-username" id="ig-user">@chatgptricks</div>
+            </div>
+            <div><div class="ig-followers-label">Seguidores</div>
+                <div class="ig-main-stat"><div class="ig-followers-count" id="ig-foll">2.45M</div><div class="ig-growth" id="ig-grow">↑ +1,139</div></div>
+            </div>
+            <div class="ig-pills">
+                <div class="ig-pill"><div class="ig-pill-val" id="ig-posts">1,234</div><div class="ig-pill-label">Posts</div></div>
+                <div class="ig-pill"><div class="ig-pill-val" id="ig-engage">4.2%</div><div class="ig-pill-label">Engagement</div></div>
+            </div>
+        </div>
+        <div class="news-card" id="n-bg" style="background-image: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800');">
+            <div class="news-gradient">
                 <span class="news-tag" id="n-tag">Breaking News</span>
                 <div class="news-headline" id="n-head">OpenClaw founder Peter Steinberger is joining OpenAI</div>
             </div>
         </div>
     </div>
-
-    <!-- The dynamic logic is now a fallback/update mechanism, but HTML has initial state for reliable screenshotting -->
     <script>
+        const WEATHER_THEMES = {
+            sunny_day:  { bg: 'images/weather_sunny.png',  theme: 'day' },
+            sunny_night:{ bg: 'images/weather_night.png',  theme: 'night' },
+            cloudy:     { bg: 'images/weather_cloudy.png', theme: 'cloudy' },
+            rain:       { bg: 'images/weather_rainy.png',  theme: 'rain' },
+            night:      { bg: 'images/weather_night.png',  theme: 'night' },
+        };
+        function getWeatherTheme(condition, isNight) {
+            const c = condition.toLowerCase();
+            if (c.includes('lluvia') || c.includes('chubasco') || c.includes('llovizna') || c.includes('tormenta')) return WEATHER_THEMES.rain;
+            if (c.includes('nube') || c.includes('nublado') || c.includes('parcial')) return WEATHER_THEMES.cloudy;
+            if (isNight) return WEATHER_THEMES.night;
+            return WEATHER_THEMES.sunny_day;
+        }
+        function getWeatherIcon(condition) {
+            const c = condition.toLowerCase();
+            if (c.includes('tormenta')) return '⛈️';
+            if (c.includes('lluvia') || c.includes('chubasco')) return '🌧️';
+            if (c.includes('llovizna')) return '🌦️';
+            if (c.includes('nublado') || c.includes('nube')) return '☁️';
+            if (c.includes('parcial')) return '⛅';
+            if (c.includes('niebla')) return '🌫️';
+            return '☀️';
+        }
         async function updateDashboard() {
             try {
-                const response = await fetch('data.json');
+                const response = await fetch('data.json?' + Date.now());
                 if (!response.ok) return;
                 const data = await response.json();
-                
-                // Weather
-                document.getElementById('w-loc').textContent = data.weather.location;
-                document.getElementById('w-cond').textContent = data.weather.condition;
-                document.getElementById('w-temp').textContent = data.weather.temp_c + '°';
-                document.getElementById('w-minmax').textContent = `Máx: ${data.weather.max_temp_c}° Mín: ${data.weather.min_temp_c}°`;
-                document.getElementById('w-wind').textContent = `${data.weather.wind_kmh} km/h`;
-                document.getElementById('w-hum').textContent = data.weather.humidity + '%';
-                document.getElementById('w-uv').textContent = data.weather.uv_index;
-                document.getElementById('w-prob').textContent = data.weather.prob_rain + '%';
-
-                // Icon Logic
-                const icon = document.getElementById('w-icon');
-                const cond = data.weather.condition.toLowerCase();
-                if (cond.includes('lluvia')) icon.textContent = '🌧️';
-                else if (cond.includes('nube') || cond.includes('nublado')) icon.textContent = '☁️';
-                else icon.textContent = '☀️';
-
-                // Instagram
-                document.getElementById('ig-user').textContent = data.instagram.username;
-                document.getElementById('ig-foll').textContent = data.instagram.followers;
-                document.getElementById('ig-grow').textContent = `↑ ${data.instagram.growth}`;
-
-                // Maxx Status
-                document.getElementById('m-date').textContent = data.maxx_status.date;
-                document.getElementById('m-ctx-p').textContent = data.maxx_status.context_percent;
-                document.getElementById('m-ctx-bar').style.width = data.maxx_status.context_percent + '%';
-                document.getElementById('m-tokens').textContent = `🧮 Tokens: ${data.maxx_status.tokens_in}`;
-                document.getElementById('m-label').textContent = data.maxx_status.label;
-
-                // News
-                document.getElementById('n-tag').textContent = data.news.tag;
-                document.getElementById('n-head').textContent = data.news.headline;
-                if (data.news.image_url) {
-                    document.getElementById('n-bg').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${data.news.image_url}')`;
+                const w = data.weather;
+                document.getElementById('w-loc').textContent = w.location;
+                document.getElementById('w-cond').textContent = w.condition;
+                document.getElementById('w-temp').textContent = w.temp_c;
+                document.getElementById('w-feels').textContent = w.feels_like_c || w.temp_c;
+                document.getElementById('w-minmax').textContent = '↑ ' + w.max_temp_c + '°  ↓ ' + w.min_temp_c + '°';
+                document.getElementById('w-wind').textContent = w.wind_kmh + ' km/h';
+                document.getElementById('w-hum').textContent = w.humidity + '%';
+                document.getElementById('w-uv').textContent = w.uv_index;
+                document.getElementById('w-prob').textContent = w.prob_rain + '%';
+                document.getElementById('w-icon').textContent = getWeatherIcon(w.condition);
+                var hour = new Date().getHours();
+                var isNight = hour < 6 || hour >= 18;
+                var wTheme = getWeatherTheme(w.condition, isNight);
+                document.getElementById('weather-bg').style.backgroundImage = "url('" + wTheme.bg + "')";
+                document.getElementById('weather-card').setAttribute('data-theme', wTheme.theme);
+                if (w.hourly_forecast && w.hourly_forecast.length > 0) {
+                    var container = document.getElementById('w-hourly');
+                    container.innerHTML = w.hourly_forecast.map(function(h) {
+                        return '<div class="hourly-chip"><span class="hourly-chip-time">' + h.time + '</span><span class="hourly-chip-icon">' + h.icon + '</span><span class="hourly-chip-temp">' + h.temp + '°</span></div>';
+                    }).join('');
                 }
-
+                var ig = data.instagram;
+                document.getElementById('ig-user').textContent = ig.username;
+                document.getElementById('ig-foll').textContent = ig.followers;
+                document.getElementById('ig-grow').textContent = '↑ ' + ig.growth;
+                if (ig.posts) document.getElementById('ig-posts').textContent = ig.posts;
+                if (ig.engagement_rate) document.getElementById('ig-engage').textContent = ig.engagement_rate;
+                var m = data.maxx_status;
+                document.getElementById('m-date').textContent = m.date;
+                document.getElementById('m-ctx-p').textContent = m.context_percent + '%';
+                document.getElementById('m-ctx-bar').style.width = m.context_percent + '%';
+                document.getElementById('m-tokens').textContent = '🧮 Tokens: ' + m.tokens_in;
+                document.getElementById('m-label').textContent = m.label;
+                if (m.last_update_time) document.getElementById('m-update').textContent = 'Last update: ' + m.last_update_time;
+                if (m.mood) document.getElementById('m-mood').textContent = m.mood;
+                var n = data.news;
+                document.getElementById('n-tag').textContent = n.tag;
+                document.getElementById('n-head').textContent = n.headline;
+                if (n.image_url) document.getElementById('n-bg').style.backgroundImage = "url('" + n.image_url + "')";
             } catch (e) { console.warn("Fetch failed, using static data", e); }
         }
         updateDashboard();

@@ -2,27 +2,37 @@
   "weather": {
     "location": "Alajuela",
     "condition": "Cielo Despejado",
-    "temp_c": "22",
+    "temp_c": "24",
+    "feels_like_c": "26",
     "max_temp_c": "30",
     "min_temp_c": "20",
     "wind_kmh": "6",
     "humidity": "80",
     "uv_index": "9 (Muy Alto)",
-    "prob_rain": "80"
+    "prob_rain": "80",
+    "hourly_forecast": [
+      {"time": "3PM", "icon": "☁️", "temp": "28"},
+      {"time": "6PM", "icon": "🌧️", "temp": "25"},
+      {"time": "9PM", "icon": "🌙", "temp": "22"}
+    ]
   },
   "instagram": {
     "username": "@chatgptricks",
     "followers": "2.45M",
     "growth": "+1,139",
-    "last_post_placeholder": "\u00daltimo Post"
+    "posts": "1,234",
+    "engagement_rate": "4.2%",
+    "last_post_placeholder": "Último Post"
   },
   "maxx_status": {
     "date": "Monday, 16 feb",
     "context_percent": 37,
     "tokens_in": "43k",
-    "telegram_status": "\u2713",
-    "whatsapp_status": "\u2713",
-    "label": "Maxx Moltbot"
+    "telegram_status": "✓",
+    "whatsapp_status": "✓",
+    "label": "Maxx Moltbot",
+    "last_update_time": "17:34",
+    "mood": "🚀"
   },
   "news": {
     "tag": "Breaking News",
