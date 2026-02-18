@@ -320,13 +320,33 @@ def generate_and_upload():
         # Create copy for double-frame systems
         subprocess.check_call(['cp', LATEST_PNG, LATEST_COPY_PNG])
 
-        # We use lftp to clear and curl to upload for reliability
-        subprocess.call(['lftp', '-c', f'open ftp://{FTP_HOST}:{FTP_PORT}; mrm frame_*; mrm Dashboard_*'], stderr=subprocess.DEVNULL)
+        # NEW WORKFLOW: Rename existing to "old_" first
+        print("Renaming existing frames to old_*...")
+        # We list files, then rename each that starts with Dashboard_
+        subprocess.call(['lftp', '-c', f'''
+            open ftp://{FTP_HOST}:{FTP_PORT};
+            ls Dashboard_* > /tmp/ftp_files.txt || exit 0
+        '''], shell=True)
         
+        # Parse and rename
+        if os.path.exists("/tmp/ftp_files.txt"):
+            with open("/tmp/ftp_files.txt", "r") as f:
+                for line in f:
+                    parts = line.split()
+                    if parts:
+                        fname = parts[-1]
+                        if fname.startswith("Dashboard_"):
+                            print(f"Renaming {fname} to old_{fname}")
+                            subprocess.call(['lftp', '-c', f'open ftp://{FTP_HOST}:{FTP_PORT}; mv {fname} old_{fname}'])
+
         print("Uploading new frames...")
-        # Corrected: Upload actual filenames created by capture.js
+        # Upload actual filenames created by capture.js
         subprocess.check_call(['curl', '-s', '-T', LATEST_PNG, f'ftp://{FTP_HOST}:{FTP_PORT}/{os.path.basename(LATEST_PNG)}'])
         subprocess.check_call(['curl', '-s', '-T', LATEST_COPY_PNG, f'ftp://{FTP_HOST}:{FTP_PORT}/{os.path.basename(LATEST_COPY_PNG)}'])
+        
+        # FINAL STEP: Cleanup old frames
+        print("Cleaning up old frames...")
+        subprocess.call(['lftp', '-c', f'open ftp://{FTP_HOST}:{FTP_PORT}; mrm old_*'], stderr=subprocess.DEVNULL)
         
         print("FTP Sync Complete.")
 
