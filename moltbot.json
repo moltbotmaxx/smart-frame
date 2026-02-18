@@ -2,8 +2,8 @@
   "moltbot": {
     "system": {
       "current_model": "google-antigravity/gemini-3-flash",
-      "token_usage_daily": "140300 / 1M",
-      "context_usage": "69%",
+      "token_usage_daily": "148k / 1M",
+      "context_usage": "75%",
       "active_subagents": []
     },
     "operations": {
@@ -13,9 +13,9 @@
       "last_post_cdn_url": "https://raw.githubusercontent.com/moltbotmaxx/memes/master/latest.png"
     },
     "state": {
-      "system_mood": "Optimizing neural pathways 🦞",
+      "system_mood": "Refining dashboard precision 🛠️",
       "logic_mode": "Thinking",
-      "last_action": "Organized projects folder"
+      "last_action": "Restored moon phase logic"
     }
   }
 }

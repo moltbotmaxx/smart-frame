@@ -2,10 +2,10 @@
   "weather": {
     "temp_c": "21",
     "wind_kmh": "10",
-    "condition": "Cielo Despejado",
+    "condition": "Clear",
     "bg_image": "images/weather_night.png",
     "theme": "night",
-    "icon": "\ud83c\udf11",
+    "icon": "🌑",
     "max_temp_c": "32",
     "min_temp_c": "21",
     "uv_index": "9",
@@ -15,17 +15,17 @@
     "hourly_forecast": [
       {
         "time": "4AM",
-        "icon": "\u2600\ufe0f",
+        "icon": "☀️",
         "temp": "21"
       },
       {
         "time": "7AM",
-        "icon": "\u2600\ufe0f",
+        "icon": "☀️",
         "temp": "23"
       },
       {
         "time": "10AM",
-        "icon": "\ud83c\udf24\ufe0f",
+        "icon": "🌤️",
         "temp": "30"
       }
     ]

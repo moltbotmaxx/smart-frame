@@ -1,12 +1,12 @@
 {
   "maxx_status": {
     "date": "Wednesday, 18 feb",
-    "context_percent": 37,
-    "tokens_in": "43k",
-    "telegram_status": "\u2713",
-    "whatsapp_status": "\u2713",
+    "context_percent": 75,
+    "tokens_in": "148k",
+    "telegram_status": "✓",
+    "whatsapp_status": "✓",
     "label": "Maxx Moltbot",
-    "last_update_time": "01:30",
-    "mood": "\ud83d\ude80"
+    "last_update_time": "01:52",
+    "mood": "🚀"
   }
 }
