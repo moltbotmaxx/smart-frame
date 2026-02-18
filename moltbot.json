@@ -13,9 +13,9 @@
       "last_post_cdn_url": "https://raw.githubusercontent.com/moltbotmaxx/memes/master/latest.png"
     },
     "state": {
-      "system_mood": "Manual capture triggered 📸",
+      "system_mood": "Refined capture & cleanup cycle 🦞",
       "logic_mode": "Thinking",
-      "last_action": "Dashboard sync & capture"
+      "last_action": "Fixed crop and FTP deletion"
     }
   }
 }
