@@ -1,32 +1,32 @@
 {
   "weather": {
-    "temp_c": "20",
-    "wind_kmh": "19",
-    "condition": "Patchy rain nearby",
+    "temp_c": "21",
+    "wind_kmh": "9",
+    "condition": "Cielo Despejado",
     "bg_image": "images/weather_night.png",
     "theme": "night",
-    "icon": "🌑",
-    "max_temp_c": "28",
-    "min_temp_c": "20",
-    "uv_index": "0",
-    "prob_rain": "100",
-    "feels_like_c": "20",
-    "humidity": "89",
+    "icon": "\ud83c\udf11",
+    "max_temp_c": "32",
+    "min_temp_c": "21",
+    "uv_index": "9",
+    "prob_rain": "3",
+    "feels_like_c": "21",
+    "humidity": "66",
     "hourly_forecast": [
       {
-        "time": "4AM",
-        "icon": "☀️",
+        "time": "5AM",
+        "icon": "\u2600\ufe0f",
         "temp": "21"
       },
       {
-        "time": "7AM",
-        "icon": "☀️",
-        "temp": "23"
+        "time": "8AM",
+        "icon": "\u2600\ufe0f",
+        "temp": "26"
       },
       {
-        "time": "10AM",
-        "icon": "🌤️",
-        "temp": "30"
+        "time": "11AM",
+        "icon": "\u2601\ufe0f",
+        "temp": "31"
       }
     ]
   }
