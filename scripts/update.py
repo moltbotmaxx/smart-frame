@@ -3,6 +3,7 @@ import os
 import subprocess
 import time
 from datetime import datetime
+from typing import Any, Dict, List, Union
 
 # Configuration
 WORKSPACE = "/Users/maxx/.openclaw/workspace"
@@ -45,19 +46,20 @@ def update_data():
         data = json.load(f)
     
     # Initialize separate weather dict
-    weather_data = { "weather": {} }
+    weather_data: Dict[str, Any] = { "weather": {} }
     w = weather_data['weather']
 
     # Initialize separate instagram dict (read existing to preserve or default)
+    ig_data: Dict[str, Any] = { "instagram": {} }
     if os.path.exists(INSTAGRAM_FILE):
         with open(INSTAGRAM_FILE, 'r') as f:
             ig_data = json.load(f)
-    else:
-        ig_data = { "instagram": {} } # Default if missing
+    
+    # If instagram is in data (migration), move it
     
     # If instagram is in data (migration), move it
     if 'instagram' in data:
-        ig_data['instagram'] = data['instagram']
+        ig_data['instagram'] = data['instagram'] # type: ignore
         del data['instagram']
 
     # Fetch weather with full hourly + daily data
@@ -209,7 +211,7 @@ def update_data():
                         "temp": str(round(hourly_temps[idx]))
                     })
             if forecast:
-                w['hourly_forecast'] = forecast
+                w['hourly_forecast'] = forecast # type: ignore
 
     except Exception as e:
         print(f"Weather update failed: {e}")
