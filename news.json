@@ -1,3 +1,23 @@
 {
-  "news": {}
+  "news": {
+    "featured": {
+      "tag": "Stealth Launch",
+      "headline": "Kana emerges from stealth with $15M to build flexible AI agents for marketers",
+      "image_url": "https://techcrunch.com/wp-content/uploads/2026/02/RAM_9821.jpg",
+      "source": "TechCrunch",
+      "summary": "Kana, a new startup founded by Tom Chavez and Vivek Vaidya, has raised $15 million in seed funding to develop AI agents specifically designed for marketing teams. The platform aims to bridge the gap between static automation and dynamic customer engagement."
+    },
+    "secondary_1": {
+      "headline": "Microsoft Office bug exposed confidential emails to Copilot AI",
+      "source": "TechCrunch",
+      "time": "26m ago",
+      "image_url": null
+    },
+    "secondary_2": {
+      "headline": "OpenAI pushes into higher education in India to scale AI skills",
+      "source": "TechCrunch",
+      "time": "38m ago",
+      "image_url": null
+    }
+  }
 }

@@ -65,10 +65,13 @@ def update_data():
         ig_data['instagram'] = data['instagram'] # type: ignore
         del data['instagram']
 
-    # Initialize separate news dict
+    # Initialize separate news dict (Preserve existing if API fails)
     news_data: Dict[str, Any] = { "news": {} }
+    if os.path.exists(NEWS_FILE):
+        with open(NEWS_FILE, 'r') as f:
+            news_data = json.load(f)
     
-    # If news is in data (migration), move it initially (will be overwritten by API)
+    # If news is in data (migration), move it initially
     if 'news' in data:
         news_data['news'] = data['news'] # type: ignore
         del data['news']
@@ -299,14 +302,19 @@ def generate_and_upload():
     CAPTURE_JS = os.path.join(PROJECT_DIR, "scripts", "capture.js")
 
     try:
-        # 1. Generate screenshot using capture.js (Puppeteer)
-        print("Capturing screenshot...")
-        subprocess.check_call(['node', CAPTURE_JS])
+        # 1. Update data files locally
+        # 2. Push to GitHub to update the master source (GitHub Pages)
+        print("Syncing data to GitHub Pages...")
+        subprocess.check_call(['git', '-C', PROJECT_DIR, 'add', '.'])
+        subprocess.check_call(['git', '-C', PROJECT_DIR, 'commit', '-m', f"Update Dashboard Data {datetime.now().strftime('%H:%M')}"])
+        subprocess.check_call(['git', '-C', PROJECT_DIR, 'push'])
         
-        # 2. Create copy
-        subprocess.check_call(['cp', LATEST_PNG, LATEST_COPY_PNG])
+        # Wait a bit for GitHub Pages to deploy
+        print("Waiting for deployment...")
+        time.sleep(15)
 
-        # 3. FTP Cleanup and Upload (Strict)
+        # 3. Generate screenshot using capture.js from URL
+        print("Capturing screenshot from GitHub Pages...")
         # We use lftp to clear and curl to upload for reliability
         print("Cleaning up FTP...")
         subprocess.call(['lftp', '-c', f'open ftp://{FTP_HOST}:{FTP_PORT}; mrm frame_*; mrm Dashboard_*'], stderr=subprocess.DEVNULL)
