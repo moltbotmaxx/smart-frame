@@ -14,19 +14,29 @@
     "humidity": "91",
     "hourly_forecast": [
       {
-        "time": "5AM",
-        "icon": "☀️",
-        "temp": "21"
+        "time": "6AM",
+        "icon": "🌧️",
+        "temp": "20"
       },
       {
-        "time": "8AM",
-        "icon": "☀️",
-        "temp": "26"
+        "time": "9AM",
+        "icon": "🌧️",
+        "temp": "23"
       },
       {
-        "time": "11AM",
-        "icon": "☁️",
-        "temp": "31"
+        "time": "12PM",
+        "icon": "🌧️",
+        "temp": "27"
+      },
+      {
+        "time": "3PM",
+        "icon": "🌧️",
+        "temp": "28"
+      },
+      {
+        "time": "6PM",
+        "icon": "☀️",
+        "temp": "23"
       }
     ]
   }
