@@ -140,8 +140,9 @@ def update_data():
         def get_moon_phase_icon():
             mp = 29.530588853
             p = datetime.now().timestamp()
-            # known new moon: Jan 6 2000
-            diff = (p - 947116800) % (mp * 86400)
+            # New Moon: Feb 17, 2026 12:01 UTC = 1771329660
+            # Use this recent epoch to avoid drift
+            diff = (p - 1771329660) % (mp * 86400)
             phase = diff / (mp * 86400) # 0.0 to 1.0
             
             if phase < 0.0625 or phase >= 0.9375: return "🌑" # New
