@@ -1,13 +1,10 @@
 {
   "moltbot": {
     "system": {
-      "current_model": "Gemini 2.0 Pro Experimental",
-      "token_usage_daily": "142k / 1M",
-      "context_usage": "45%",
-      "active_subagents": [
-        "Twitter Crawler",
-        "News Fetcher"
-      ]
+      "current_model": "google-antigravity/gemini-3-flash",
+      "token_usage_daily": "140300 / 1M",
+      "context_usage": "69%",
+      "active_subagents": []
     },
     "operations": {
       "daily_goal_progress": "3/10",
@@ -16,9 +13,9 @@
       "last_post_cdn_url": "https://raw.githubusercontent.com/moltbotmaxx/memes/master/latest.png"
     },
     "state": {
-      "system_mood": "Hunting for crawfish facts \ud83e\udd9e",
+      "system_mood": "Optimizing neural pathways 🦞",
       "logic_mode": "Thinking",
-      "last_action": "Optimized social_brain.js"
+      "last_action": "Organized projects folder"
     }
   }
 }
