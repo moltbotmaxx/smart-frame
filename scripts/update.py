@@ -9,6 +9,7 @@ WORKSPACE = "/Users/maxx/.openclaw/workspace"
 PROJECT_DIR = os.path.join(WORKSPACE, "projects", "smart-frame")
 DATA_FILE = os.path.join(PROJECT_DIR, "data.json")
 WEATHER_FILE = os.path.join(PROJECT_DIR, "weather.json")
+INSTAGRAM_FILE = os.path.join(PROJECT_DIR, "instagram.json")
 HTML_FILE = os.path.join(PROJECT_DIR, "index.html")
 FTP_HOST = "192.168.100.12"
 FTP_PORT = "2221"
@@ -46,6 +47,18 @@ def update_data():
     # Initialize separate weather dict
     weather_data = { "weather": {} }
     w = weather_data['weather']
+
+    # Initialize separate instagram dict (read existing to preserve or default)
+    if os.path.exists(INSTAGRAM_FILE):
+        with open(INSTAGRAM_FILE, 'r') as f:
+            ig_data = json.load(f)
+    else:
+        ig_data = { "instagram": {} } # Default if missing
+    
+    # If instagram is in data (migration), move it
+    if 'instagram' in data:
+        ig_data['instagram'] = data['instagram']
+        del data['instagram']
 
     # Fetch weather with full hourly + daily data
     try:
@@ -211,15 +224,18 @@ def update_data():
     if 'weather' in data:
         del data['weather']
 
-    # Save Weather Data
     with open(WEATHER_FILE, 'w') as f:
         json.dump(weather_data, f, indent=2)
+
+    # Save Instagram Data
+    with open(INSTAGRAM_FILE, 'w') as f:
+        json.dump(ig_data, f, indent=2)
 
     # Save Main Data (Status, etc.)
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=2)
 
-    return data, weather_data
+    return data, weather_data, ig_data
 
 def generate_and_upload():
     # Capture current counter

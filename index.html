@@ -859,16 +859,20 @@
         async function go() {
             try {
                 // Fetch both data sources in parallel
-                const [rData, rWeather] = await Promise.all([
+                const [rData, rWeather, rInsta] = await Promise.all([
                     fetch('data.json?' + Date.now()),
-                    fetch('weather.json?' + Date.now())
+                    fetch('weather.json?' + Date.now()),
+                    fetch('instagram.json?' + Date.now())
                 ]);
 
-                if (!rData.ok || !rWeather.ok) return;
+                if (!rData.ok || !rWeather.ok || !rInsta.ok) return;
 
                 const d = await rData.json();
                 const wData = await rWeather.json();
+                const iData = await rInsta.json();
+
                 const w = wData.weather;
+                const ig = iData.instagram;
                 document.getElementById('w-loc').textContent = w.location;
                 document.getElementById('w-cond').textContent = w.condition;
                 document.getElementById('w-temp').textContent = w.temp_c;
@@ -887,12 +891,14 @@
                         return '<div class="w-hr"><div class="w-hr-t">' + x.time + '</div><div class="w-hr-i">' + x.icon + '</div><div class="w-hr-v">' + x.temp + '°</div></div>';
                     }).join('');
                 }
-                var ig = d.instagram;
+                // Instagram
+                // const ig = d.instagram; // Now from iData
                 document.getElementById('ig-user').textContent = ig.username;
                 document.getElementById('ig-foll').textContent = ig.followers;
-                document.getElementById('ig-grow').textContent = '↑ ' + ig.growth;
-                if (ig.posts) document.getElementById('ig-posts').textContent = ig.posts;
-                if (ig.engagement_rate) document.getElementById('ig-engage').textContent = ig.engagement_rate;
+                document.getElementById('ig-grow').textContent = ig.growth;
+                if (document.getElementById('ig-posts')) document.getElementById('ig-posts').textContent = ig.posts;
+                if (document.getElementById('ig-rate')) document.getElementById('ig-rate').textContent = ig.engagement_rate;
+                if (document.getElementById('ig-last')) document.getElementById('ig-last').textContent = ig.last_post_placeholder || 'Último Post';
                 var m = d.maxx_status;
                 document.getElementById('m-label').textContent = m.label;
                 document.getElementById('m-ctx-p').textContent = m.context_percent + '%';

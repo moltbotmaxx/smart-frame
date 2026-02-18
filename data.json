@@ -1,20 +1,12 @@
 {
-  "instagram": {
-    "username": "@chatgptricks",
-    "followers": "2.45M",
-    "growth": "+1,139",
-    "posts": "1,234",
-    "engagement_rate": "4.2%",
-    "last_post_placeholder": "\u00daltimo Post"
-  },
   "maxx_status": {
-    "date": "Tuesday, 17 feb",
+    "date": "Wednesday, 18 feb",
     "context_percent": 37,
     "tokens_in": "43k",
     "telegram_status": "\u2713",
     "whatsapp_status": "\u2713",
     "label": "Maxx Moltbot",
-    "last_update_time": "23:50",
+    "last_update_time": "00:03",
     "mood": "\ud83d\ude80"
   },
   "news": {
