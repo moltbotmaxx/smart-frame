@@ -861,17 +861,24 @@
             </div>
         </div>
 
-        <!-- NEWS -->
-        <div class="card-news" id="card-news"
-            style="background-image:url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800')">
+        <!-- NEWS (Span 4 = 67%) -->
+        <div class="card-news" id="n-card" style="grid-column: span 4;">
             <div class="n-grad"></div>
             <div class="n-inner">
-                <div class="n-tag">
-                    <div class="n-dot"></div><span id="n-tag">Breaking News</span>
+                <!-- FEATURED STORY -->
+                <div class="n-featured">
+                    <div class="n-tag">
+                        <div class="n-dot"></div>
+                        <span id="n-tag">AI News</span>
+                    </div>
+                    <div>
+                        <div class="n-head" id="n-head">Loading News...</div>
+                        <div class="n-source" id="n-source">System</div>
+                    </div>
                 </div>
-                <div>
-                    <div class="n-head" id="n-head">OpenClaw founder Peter Steinberger is joining OpenAI</div>
-                    <div class="n-source" id="n-source">via TechCrunch</div>
+                <!-- HEADLINE LIST -->
+                <div class="n-list" id="n-list">
+                    <!-- Populated by JS -->
                 </div>
             </div>
         </div>
@@ -974,10 +981,30 @@
                 }
                 // News
                 // var n = d.news; // Now from nData
-                document.getElementById('n-tag').textContent = n.tag;
-                document.getElementById('n-head').textContent = n.headline;
-                document.getElementById('n-source').textContent = n.source;
-                document.getElementById('card-news').style.backgroundImage = "url('" + n.image_url + "')";
+                const nm = n.featured || {};
+                const nList = n.list || [];
+
+                document.getElementById('n-tag').textContent = nm.tag || 'AI News';
+                document.getElementById('n-head').textContent = nm.headline || 'No headlines available';
+                document.getElementById('n-source').textContent = nm.source || 'Unknown';
+
+                const nCard = document.getElementById('n-card'); // Correct ID from HTML update
+                if (nm.image_url) {
+                    nCard.style.backgroundImage = "url('" + nm.image_url + "')";
+                }
+
+                // Render News List
+                const listContainer = document.getElementById('n-list');
+                if (listContainer && nList.length > 0) {
+                    listContainer.innerHTML = nList.map(item => `
+                        <div class="n-item">
+                            <div class="n-item-head">${item.headline}</div>
+                            <div class="n-item-meta">${item.source}</div>
+                        </div>
+                    `).join('');
+                } else if (listContainer) {
+                    listContainer.innerHTML = '';
+                }
             } catch (e) { console.warn(e); }
         }
         go();
