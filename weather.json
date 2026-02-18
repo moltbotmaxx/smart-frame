@@ -1,44 +1,33 @@
 {
   "weather": {
-    "temp_c": "20",
-    "wind_kmh": "17",
-    "condition": "Patchy rain nearby",
-    "bg_image": "images/weather_night.png",
-    "theme": "night",
-    "icon": "🌑",
-    "max_temp_c": "28",
+    "temp_c": "25",
+    "wind_kmh": "9",
+    "condition": "Cielo Despejado",
+    "bg_image": "images/weather_sunny.png",
+    "theme": "day",
+    "icon": "\u2600\ufe0f",
+    "max_temp_c": "32",
     "min_temp_c": "20",
-    "uv_index": "0",
-    "prob_rain": "100",
-    "feels_like_c": "20",
-    "humidity": "92",
+    "uv_index": "9",
+    "prob_rain": "3",
+    "feels_like_c": "23",
+    "humidity": "64",
     "hourly_forecast": [
       {
-        "time": "6AM",
-        "icon": "🌧️",
-        "temp": "20"
+        "time": "10AM",
+        "icon": "\u2600\ufe0f",
+        "temp": "30"
       },
       {
-        "time": "9AM",
-        "icon": "🌧️",
-        "temp": "23"
+        "time": "1PM",
+        "icon": "\u2601\ufe0f",
+        "temp": "31"
       },
       {
-        "time": "12PM",
-        "icon": "🌧️",
+        "time": "4PM",
+        "icon": "\u26c5",
         "temp": "27"
-      },
-      {
-        "time": "3PM",
-        "icon": "🌧️",
-        "temp": "28"
-      },
-      {
-        "time": "6PM",
-        "icon": "☀️",
-        "temp": "23"
       }
-    ],
-    "last_updated": "2026-02-18T03:36:00-06:00"
+    ]
   }
 }
