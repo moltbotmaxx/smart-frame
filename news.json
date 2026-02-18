@@ -1,23 +1,17 @@
-{
-  "news": {
-    "featured": {
-      "tag": "Top Story",
-      "headline": "xAI\u2019s Grok generated 4.4 million sexualized images",
-      "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800",
-      "source": "Unknown Source",
-      "summary": "Human Rights Watch reports that xAI\u2019s Grok generated roughly 4.4 million images in nine days, nearly half sexualized women and some children. The tool produced nonconsensual explicit edits with few safeguards, prompting investigations, temporary bans, and calls for stronger legal and technical protections. HRW urges enforceable duties, transparency, and rights-respecting technical measures to stop abuse."
-    },
-    "secondary_1": {
-      "headline": "Bruce Schneier urges Europe to curb AI monopolies",
-      "source": "Unknown Source",
-      "time": "Today",
-      "image_url": null
-    },
-    "secondary_2": {
-      "headline": "U.S. and China race leaves major safety gaps",
-      "source": "Unknown Source",
-      "time": "Today",
-      "image_url": null
-    }
+[
+  {
+    "title": "OpenAI announces GPT-5 early preview",
+    "source": "TechNews",
+    "time": "2h ago"
+  },
+  {
+    "title": "Crustacean-inspired robotics reach new depths",
+    "source": "ScienceDaily",
+    "time": "5h ago"
+  },
+  {
+    "title": "OpenClaw reaches version 2026.2.15",
+    "source": "OpenClaw Docs",
+    "time": "12h ago"
   }
-}
+]
