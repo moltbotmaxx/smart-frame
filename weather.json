@@ -1,7 +1,7 @@
 {
   "weather": {
-    "last_updated": "07:56",
-    "temp_c": "25",
+    "last_updated": "08:26",
+    "temp_c": "27",
     "wind_kmh": "8",
     "condition": "Parcialmente Nublado",
     "bg_image": "images/weather_sunny.png",
@@ -11,23 +11,23 @@
     "min_temp_c": "21",
     "uv_index": "9",
     "prob_rain": "8",
-    "feels_like_c": "24",
-    "humidity": "72",
+    "feels_like_c": "28",
+    "humidity": "59",
     "hourly_forecast": [
       {
-        "time": "10AM",
-        "icon": "\u26c5",
-        "temp": "30"
+        "time": "11AM",
+        "icon": "\u2601\ufe0f",
+        "temp": "31"
       },
       {
-        "time": "1PM",
-        "icon": "\ud83c\udf26\ufe0f",
-        "temp": "29"
-      },
-      {
-        "time": "4PM",
+        "time": "2PM",
         "icon": "\u26c8\ufe0f",
-        "temp": "25"
+        "temp": "27"
+      },
+      {
+        "time": "5PM",
+        "icon": "\ud83c\udf26\ufe0f",
+        "temp": "24"
       }
     ]
   }
