@@ -1,33 +1,33 @@
 {
   "weather": {
-    "last_updated": "13:56",
-    "temp_c": "27",
+    "last_updated": "14:26",
+    "temp_c": "26",
     "wind_kmh": "9",
-    "condition": "Chubascos",
+    "condition": "Tormenta",
     "bg_image": "images/weather_rainy.png",
     "theme": "rain",
-    "icon": "\ud83c\udf26\ufe0f",
+    "icon": "\u26c8\ufe0f",
     "max_temp_c": "31",
     "min_temp_c": "20",
     "uv_index": "8",
     "prob_rain": "10",
-    "feels_like_c": "32",
-    "humidity": "54",
+    "feels_like_c": "29",
+    "humidity": "73",
     "hourly_forecast": [
       {
-        "time": "4PM",
-        "icon": "\u26c8\ufe0f",
-        "temp": "25"
+        "time": "5PM",
+        "icon": "\ud83c\udf27\ufe0f",
+        "temp": "24"
       },
       {
-        "time": "7PM",
-        "icon": "\u26c5",
+        "time": "8PM",
+        "icon": "\ud83c\udf24\ufe0f",
         "temp": "23"
       },
       {
-        "time": "10PM",
-        "icon": "\u26c5",
-        "temp": "21"
+        "time": "11PM",
+        "icon": "\ud83c\udf24\ufe0f",
+        "temp": "20"
       }
     ]
   }
