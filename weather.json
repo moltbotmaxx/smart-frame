@@ -1,8 +1,8 @@
 {
   "weather": {
-    "last_updated": "13:26",
-    "temp_c": "28",
-    "wind_kmh": "10",
+    "last_updated": "13:56",
+    "temp_c": "27",
+    "wind_kmh": "9",
     "condition": "Chubascos",
     "bg_image": "images/weather_rainy.png",
     "theme": "rain",
