@@ -2,19 +2,19 @@
   "news": {
     "featured": {
       "tag": "Latest",
-      "headline": "Reddit is testing a new AI search feature for shopping",
+      "headline": "YouTube\u2019s latest experiment brings its conversational AI tool to TVs",
       "image_url": "https://techcrunch.com/wp-content/uploads/2026/02/RAM_9821.jpg",
       "source": "TechCrunch",
-      "summary": "A small group of users in the U.S. will start to see search results that include interactive product carousels with pricing, images, and direct where-to-buy links. ..."
+      "summary": "YouTube is testing conversational AI on smart TVs, allowing viewers to ask the assistant questions related to the video they're watching on the big screen...."
     },
     "secondary_1": {
-      "headline": "OpenAI reportedly finalizing $100B deal at more than $850B valuation",
+      "headline": "Reddit is testing a new AI search feature for shopping",
       "source": "TechCrunch",
       "time": "New",
       "image_url": null
     },
     "secondary_2": {
-      "headline": "Reload wants to give your AI agents a shared memory",
+      "headline": "OpenAI reportedly finalizing $100B deal at more than $850B valuation",
       "source": "TechCrunch",
       "time": "New",
       "image_url": null
