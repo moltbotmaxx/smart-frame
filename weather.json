@@ -1,8 +1,8 @@
 {
   "weather": {
-    "last_updated": "16:56",
+    "last_updated": "17:26",
     "temp_c": "24",
-    "wind_kmh": "6",
+    "wind_kmh": "5",
     "condition": "Tormenta",
     "bg_image": "images/weather_rainy.png",
     "theme": "rain",
@@ -11,16 +11,16 @@
     "min_temp_c": "18",
     "uv_index": "8",
     "prob_rain": "73",
-    "feels_like_c": "29",
-    "humidity": "83",
+    "feels_like_c": "28",
+    "humidity": "85",
     "hourly_forecast": [
       {
-        "time": "7PM",
+        "time": "8PM",
         "icon": "\u2601\ufe0f",
         "temp": "23"
       },
       {
-        "time": "10PM",
+        "time": "11PM",
         "icon": "\u2601\ufe0f",
         "temp": "22"
       }
