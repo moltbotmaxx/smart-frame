@@ -1,8 +1,8 @@
 {
   "weather": {
-    "last_updated": "10:26",
+    "last_updated": "10:56",
     "temp_c": "26",
-    "wind_kmh": "10",
+    "wind_kmh": "11",
     "condition": "Parcialmente Nublado",
     "bg_image": "images/weather_sunny.png",
     "theme": "day",
