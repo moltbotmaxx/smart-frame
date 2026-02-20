@@ -2,19 +2,19 @@
   "news": {
     "featured": {
       "tag": "Latest",
-      "headline": "InScope nabs $14.5M to solve the pain of financial reporting",
+      "headline": "Anthropic-funded group backs candidate attacked by rival AI super PAC",
       "image_url": "https://techcrunch.com/wp-content/uploads/2026/02/RAM_9821.jpg",
       "source": "TechCrunch",
-      "summary": "The startup, founded by accountants who worked at Flexport, Miro, Hopin and Thrive Global, automates the difficulties of prepping financial statements...."
+      "summary": "Dueling pro-AI PACs have centered around backing or targeting one New York congressional bid: Alex Bores, whose RAISE Act requires AI developers to disclose safety protocols and report serious system ..."
     },
     "secondary_1": {
-      "headline": "Great news for xAI: Grok is now pretty good at answering questions about Baldur\u2019s Gate",
+      "headline": "InScope nabs $14.5M to solve the pain of financial reporting",
       "source": "TechCrunch",
       "time": "New",
       "image_url": null
     },
     "secondary_2": {
-      "headline": "\u2018Toy Story 5\u2019 takes aim at creepy AI toys: \u2018I\u2019m always listening\u2019",
+      "headline": "Great news for xAI: Grok is now pretty good at answering questions about Baldur\u2019s Gate",
       "source": "TechCrunch",
       "time": "New",
       "image_url": null
