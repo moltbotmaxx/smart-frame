@@ -1,23 +1,23 @@
 {
   "weather": {
-    "last_updated": "18:56",
+    "last_updated": "19:26",
     "temp_c": "23",
     "wind_kmh": "3",
-    "condition": "Tormenta",
+    "condition": "Parcialmente Nublado",
     "bg_image": "images/weather_night.png",
     "theme": "night",
-    "icon": "\u26c8\ufe0f",
+    "icon": "\u2601\ufe0f",
     "max_temp_c": "28",
     "min_temp_c": "18",
     "uv_index": "8",
     "prob_rain": "73",
     "feels_like_c": "27",
-    "humidity": "89",
+    "humidity": "92",
     "hourly_forecast": [
       {
-        "time": "9PM",
+        "time": "10PM",
         "icon": "\u2601\ufe0f",
-        "temp": "23"
+        "temp": "22"
       }
     ]
   }
