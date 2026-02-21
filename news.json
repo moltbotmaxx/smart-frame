@@ -2,19 +2,19 @@
   "news": {
     "featured": {
       "tag": "Latest",
-      "headline": "India\u2019s Sarvam launches Indus AI chat app as competition heats up",
-      "image_url": "https://techcrunch.com/wp-content/uploads/2026/02/RAM_9821.jpg",
+      "headline": "All the important news from the ongoing India AI Summit",
+      "image_url": "https://techcrunch.com/wp-content/uploads/2026/02/TC-india-ai-summit.jpg",
       "source": "TechCrunch",
-      "summary": "Sarvam's Indus chat app is currently available in beta...."
+      "summary": "A roundup of major India AI Summit announcements, including large-scale data center plans, new model launches, and ecosystem partnerships."
     },
     "secondary_1": {
-      "headline": "The creator economy\u2019s ad revenue problem and India\u2019s AI ambitions",
+      "headline": "Great news for xAI: Grok is now pretty good at answering questions about Baldur’s Gate",
       "source": "TechCrunch",
       "time": "New",
       "image_url": null
     },
     "secondary_2": {
-      "headline": "Why creators are ditching ad revenue for chocolate bars and fintech acquisitions\u00a0",
+      "headline": "In 2026, AI will move from hype to pragmatism",
       "source": "TechCrunch",
       "time": "New",
       "image_url": null
